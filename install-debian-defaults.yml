@@ -1,0 +1,28 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update with apt update
+    apt:
+      update-cache: yes
+
+  - name: Upgrade with apt upgrade
+    apt:
+      upgrade: dist
+
+  - name: Install all default packages on Debian and Ubuntu servers
+    apt:
+      name: 
+        - unattended-upgrades
+        - net-tools
+        - tcpdump
+        - firmware-realtek
+        - firmware-misc-nonfree
+        - locales-all
+        - vim-nox
+        - postfix
+        - mailutils
+        - qemu-guest-agent
+      state: present
