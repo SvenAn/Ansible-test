@@ -4,25 +4,37 @@
   become: true
   tasks:
 
-  - name: Update with apt update
-    apt:
-      update-cache: yes
-
-  - name: Upgrade with apt upgrade
-    apt:
-      upgrade: dist
-
   - name: Install all default packages on Debian and Ubuntu servers
     apt:
       name: 
         - unattended-upgrades
         - net-tools
         - tcpdump
-        - firmware-realtek
-        - firmware-misc-nonfree
         - locales-all
         - vim-nox
         - postfix
         - mailutils
         - qemu-guest-agent
-      state: present
+      state: latest
+      update_cache: yes
+        # when: ansible_distribution_release == "bookworm"
+  
+- hosts: Debian_servers
+  become: true
+  tasks:
+
+  - name: Install packages on Debian servers
+    apt:
+      name: 
+        - firmware-realtek
+        - firmware-misc-nonfree
+
+  - name: Check if /etc/localtime exists
+    stat:
+      path: /etc/localtime
+    register: localtime_status
+
+  - name: Set timezone to Europe/Oslo if /etc/localtime is missing
+    command: ln -sf /usr/share/zoneinfo/Europe/Oslo /etc/localtime
+    when: not localtime_status.stat.exists
+

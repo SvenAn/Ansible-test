@@ -1,3 +1,12 @@
+[Debian_servers]
 pi1.tideli.com
 pi2.tideli.com
 wg.tideli.com
+bokhylla.tideli.com
+monitor.tideli.com
+postmann.tideli.com
+
+[Ubuntu_servers]
+www.tideli.com
+torre.tideli.com
+nysan.tideli.com
